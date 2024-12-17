@@ -2743,8 +2743,9 @@ function shareCurrentState() {
     // 将状态转换为Base64编码
     const stateStr = btoa(JSON.stringify(state));
     
-    // 创建分享链接
-    const shareUrl = `${window.location.origin}${window.location.pathname}?state=${stateStr}`;
+    // 使用你的 GitHub Pages 地址
+    const baseUrl = 'https://marulion.github.io/firework/';
+    const shareUrl = `${baseUrl}?state=${stateStr}`;
     
     // 复制链接到剪贴板
     navigator.clipboard.writeText(shareUrl).then(() => {
