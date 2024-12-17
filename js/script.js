@@ -376,7 +376,7 @@ const appNodes = {
 	soundBtnSVG: ".sound-btn use",
 	shellType: ".shell-type",
 	shellTypeLabel: ".shell-type-label",
-	shellSize: ".shell-size", //烟花大小
+	shellSize: ".shell-size", //花火のサイズ
 	shellSizeLabel: ".shell-size-label",
 	quality: ".quality-ui",
 	qualityLabel: ".quality-ui-label",
@@ -384,9 +384,9 @@ const appNodes = {
 	skyLightingLabel: ".sky-lighting-label",
 	scaleFactor: ".scaleFactor",
 	scaleFactorLabel: ".scaleFactor-label",
-	wordShell: ".word-shell", // 文字烟花
+	wordShell: ".word-shell", // 文字花火
 	wordShellLabel: ".word-shell-label",
-	autoLaunch: ".auto-launch", //自动烟花开关
+	autoLaunch: ".auto-launch", //自動花火ボタン
 	autoLaunchLabel: ".auto-launch-label",
 	finaleModeFormOption: ".form-option--finale-mode",
 	finaleMode: ".finale-mode",
@@ -518,32 +518,36 @@ appNodes.helpModalOverlay.addEventListener("click", () => {
 	store.setState({ openHelpTopic: null });
 });
 
-//常数导数
+// 定数導出
 const COLOR_NAMES = Object.keys(COLOR);
 const COLOR_CODES = COLOR_NAMES.map((colorName) => COLOR[colorName]);
-//看不见的星星需要一个标识符，即使它们不会被渲染——物理学仍然适用。
+
+// 見えない星には識別子が必要です。レンダリングされなくても物理演算は適用されます。
 const COLOR_CODES_W_INVIS = [...COLOR_CODES, INVISIBLE];
-//颜色代码映射到它们在数组中的索引。对于快速确定颜色是否已经在循环中更新非常有用。
+
+// 色コードが配列内のインデックスにマッピングされます。ループ内で色が更新されるかを素早く確認するのに便利です。
 const COLOR_CODE_INDEXES = COLOR_CODES_W_INVIS.reduce((obj, code, i) => {
-	obj[code] = i;
-	return obj;
+    obj[code] = i;
+    return obj;
 }, {});
-// Tuples是用{ r，g，b }元组(仍然只是对象)的值通过颜色代码(十六进制)映射的键。
+
+// タプルは { r, g, b } オブジェクトとして、カラーコード（16進数）にマッピングされます。
 const COLOR_TUPLES = {};
 COLOR_CODES.forEach((hex) => {
-	COLOR_TUPLES[hex] = {
-		r: parseInt(hex.substr(1, 2), 16),
-		g: parseInt(hex.substr(3, 2), 16),
-		b: parseInt(hex.substr(5, 2), 16),
-	};
+    COLOR_TUPLES[hex] = {
+        r: parseInt(hex.substr(1, 2), 16),
+        g: parseInt(hex.substr(3, 2), 16),
+        b: parseInt(hex.substr(5, 2), 16),
+    };
 });
 
-// 获取随机颜色
+// ランダムな色を取得する関数
+
 function randomColorSimple() {
 	return COLOR_CODES[(Math.random() * COLOR_CODES.length) | 0];
 }
 
-// 得到一个随机的颜色根据一些定制选项
+// カスタムオプションに基づいてランダムな色を取得する
 let lastColor;
 function randomColor(options) {
 	const notSame = options && options.notSame;
@@ -551,7 +555,7 @@ function randomColor(options) {
 	const limitWhite = options && options.limitWhite;
 	let color = randomColorSimple();
 
-	// 限制白色随机抽取的
+	// 白色のランダム抽出を制限する
 	if (limitWhite && color === COLOR.White && Math.random() < 0.6) {
 		color = randomColorSimple();
 	}
@@ -570,7 +574,7 @@ function randomColor(options) {
 	return color;
 }
 
-// 随机获取一段文字
+// ランダムに文字列を取得する
 function randomWord() {
 	if (randomWords.length === 0) return "";
 	if (randomWords.length === 1) return randomWords[0];
@@ -780,9 +784,9 @@ function shellFromConfig(size) {
 	return shellTypes[shellNameSelector()](size);
 }
 
-//获取随机外壳，不包括处理密集型变体
-//注意，只有在配置中选择了“随机”shell时，这才是随机的。
-//还有，这不创建烟花，只返回工厂函数。
+// ランダムシェルを取得します。ただし、密集型バリエーションは含みません。
+// 注意：この処理は、設定で「ランダム」シェルが選択されている場合にのみランダムになります。
+// また、この処理では花火を生成せず、ファクトリ関数のみを返します。
 const fastShellBlacklist = ["Falling Leaves", "Floral", "Willow"];
 function randomFastShell() {
 	const isRandom = shellNameSelector() === "Random";
@@ -795,20 +799,20 @@ function randomFastShell() {
 	return shellTypes[shellName];
 }
 
-//烟花类型
+// 花火の種類
 const shellTypes = {
-	Random: randomShell,
-	Crackle: crackleShell,
-	Crossette: crossetteShell,
-	Crysanthemum: crysanthemumShell,
-	"Falling Leaves": fallingLeavesShell,
-	Floral: floralShell,
-	Ghost: ghostShell,
-	"Horse Tail": horsetailShell,
-	Palm: palmShell,
-	Ring: ringShell,
-	Strobe: strobeShell,
-	Willow: willowShell,
+	Random: randomShell,// ランダム
+	Crackle: crackleShell,// パチパチ
+	Crossette: crossetteShell,// クロス
+	Crysanthemum: crysanthemumShell,// 菊
+	"Falling Leaves": fallingLeavesShell,// 散る葉
+	Floral: floralShell,// 花
+	Ghost: ghostShell,// 幽霊
+	"Horse Tail": horsetailShell,// 馬尾
+	Palm: palmShell,// ヤシ
+	Ring: ringShell,// リング
+	Strobe: strobeShell,// ストロボ
+	Willow: willowShell,// 柳
 };
 
 const shellNames = Object.keys(shellTypes);
@@ -1696,19 +1700,21 @@ function getWordDots(word) {
 }
 
 /**
- * 用于创建球形粒子爆发的辅助对象。
+ * 球状粒子爆発を生成するための補助オブジェクト。
  *
- * @param  {Number} count               所需的恒星/粒子数量。该值是一个建议，而创建的爆发可能有更多的粒子。目前的算法无法完美地
- *										在球体表面均匀分布特定数量的点。
- * @param  {Function} particleFactory   每生成一颗星/粒子调用一次。传递了两个参数:
- * 										`angle `:恒星/粒子的方向。
- * 										`speed `:粒子速度的倍数，从0.0到1.0。
- * @param  {Number} startAngle=0        对于分段爆发，只能生成部分粒子弧。这
- *										允许设置起始圆弧角度(弧度)。
- * @param  {Number} arcLength=TAU       弧的长度(弧度)。默认为整圆。
+ * @param {Number} count - 必要な恒星/粒子の数。この値は推奨値であり、生成される爆発ではより多くの粒子が生成されることがあります。
+ *                       現在のアルゴリズムでは、球体表面上に指定された数の点を均等に分布することが完璧にはできません。
+ * @param {Function} particleFactory - 星や粒子を生成するたびに呼び出されるコールバック関数。
+ *                                      パラメータとして以下を渡します：
+ *                                      `angle`: 恒星や粒子の方向。
+ *                                      `speed`: 粒子の速度の倍率（0.0から1.0の間）。
+ * @param {Number} startAngle=0 - セグメント化された爆発の場合、部分的に粒子の弧を生成します。
+ *                                このパラメータで開始角度（ラジアン）を設定できます。
+ * @param {Number} arcLength=TAU - 弧の長さ（ラジアン）。デフォルトでは、完全な円。
  *
- * @return {void}              不返回任何内容；由“particleFactory”使用给定的数据。
+ * @return {void} - 値を返さず、`particleFactory`が渡されたデータを使用します。
  */
+
 function createBurst(count, particleFactory, startAngle = 0, arcLength = PI_2) {
 	// Assuming sphere with surface area of `count`, calculate various
 	// properties of said sphere (unit is stars).
@@ -1741,14 +1747,16 @@ function createBurst(count, particleFactory, startAngle = 0, arcLength = PI_2) {
 }
 
 /**
- *
- * @param {string} wordText  文字内容
- * @param {Function} particleFactory 每生成一颗星/粒子调用一次。传递参数:
- * 		                             `point `:恒星/粒子的起始位置_相对于canvas。
- *              					 `color `:粒子颜色。
- * @param {number} center_x 	爆炸中心点x
- * @param {number} center_y  	爆炸中心点y
+ * 花火生成用の関数。
+ * @param {string} wordText - 文字コンテンツ。
+ * @param {Function} particleFactory - 星や粒子を生成するたびに呼び出されるコールバック関数。
+ *                                      パラメータとして以下を渡します：
+ *                                      `point`: 恒星や粒子の開始位置（キャンバスに対する相対位置）。
+ *                                      `color`: 粒子の色。
+ * @param {number} center_x - 爆発中心のX座標。
+ * @param {number} center_y - 爆発中心のY座標。
  */
+
 function createWordBurst(wordText, particleFactory, center_x, center_y) {
 	//将点阵坐标转换为canvas坐标
 	var map = getWordDots(wordText);
@@ -1861,20 +1869,22 @@ class Shell {
 	}
 
 	/**
-	 * 发射烟花
-	 * @param {number} position X位置
-	 * @param {number} launchHeight 爆炸所在高度
-	 */
+ 	* 花火を発射します。
+ 	* @param {number} position - X座標位置。
+ 	* @param {number} launchHeight - 爆発する高さ。
+ 	*/
+
 	launch(position, launchHeight) {
 		const width = stageW;
 		const height = stageH;
-		//与屏幕两侧保持外壳的距离。
+	// シェルが画面の両側と保つ距離。
 		const hpad = 60;
-		//与屏幕顶部的距离，以保持烟花爆裂。
+	// 画面上部との距離。花火が爆発するためのスペースを確保します。
 		const vpad = 50;
-		//最小爆发高度，以舞台高度的百分比表示
+	// 最小の爆発高度。ステージの高さの割合で表します。
 		const minHeightPercent = 0.45;
-		//以像素为单位的最小突发高度
+	// ピクセル単位での最小爆発高度。
+
 		const minHeight = height - height * minHeightPercent;
 
 		const launchX = position * (width - hpad * 2) + hpad;
@@ -1884,8 +1894,9 @@ class Shell {
 		const launchDistance = launchY - burstY;
 		// Using a custom power curve to approximate Vi needed to reach launchDistance under gravity and air drag.
 		// Magic numbers came from testing.
-		//使用自定义功率曲线来逼近在重力和空气阻力下达到发射距离所需的Vi。
-		//神奇的数字来自测试。
+		// カスタムのパワーカーブを使用して、重力と空気抵抗の下で発射距離に到達するために必要な初速度 (Vi) を近似します。
+		// 「魔法の数値」はテストから得られたものです。
+
 		const launchVelocity = Math.pow(launchDistance * 0.04, 0.64);
 
 		const comet = (this.comet = Star.add(
@@ -2197,9 +2208,10 @@ class Shell {
 		// We don't want multiple sounds from pistil or streamer "sub-shells".
 		// This can be detected by the presence of a comet.
 
-		//播放声音，但只针对“原装”shell，即被推出的那个。
-		//我们不希望多个声音来自雌蕊或流光“子壳”。
-		//这可以通过彗星的出现来检测。
+		// 音を再生しますが、あくまで「オリジナル」のシェル（打ち上げられたもの）に対してのみです。
+		// 雌蕊や流光の「子シェル」から複数の音が鳴ることを防ぎます。
+		// これは彗星（コメット）の出現によって検出できます。
+
 
 		if (this.comet) {
 			// Scale explosion sound based on current shell size and selected (max) shell size.
@@ -2208,11 +2220,13 @@ class Shell {
 			// when a value too small is given though, so instead of basing it on proportions, we just
 			// look at the difference in size and map it to a range known to sound good.
 
-			//根据当前烟花大小和选定的(最大)烟花大小缩放爆炸声音。
-			//拍摄选择的外壳尺寸无论选择的尺寸如何，听起来总是一样的，
-			//但是小一点的炮弹自动发射的时候，声音会小一点。听起来不太好
-			//但是当给定的值太小时，我们不是根据比例，而是
-			//看大小差异，映射到一个已知好听的范围。
+			// 現在の花火の大きさと選択された（最大）花火の大きさに基づいて爆発音をスケーリングします。
+			// 選択された花火のサイズは、どのサイズを選んでも同じ音量で聞こえますが、
+			// 小さいサイズの花火が自動で発射される場合、音量は少し小さくなります。
+			// これはあまり自然には聞こえません。
+			// ただし、指定された値が極端に小さい場合は、比例スケーリングではなく、
+			// 大きさの差異を考慮し、既知の聞き取りやすい範囲にマッピングします。
+
 			const maxDiff = 2;
 			const sizeDifferenceFromMaxSize = Math.min(maxDiff, shellSizeSelector() - this.shellSize);
 			const soundScale = (1 - sizeDifferenceFromMaxSize / maxDiff) * 0.3 + 0.7;
@@ -2298,32 +2312,33 @@ const Star = {
 		instance.sparkLifeVariation = 0.25;
 		instance.strobe = false;
 
-		/*
-			visible: bool, 是否应该绘制星花.
-			heavy: bool, 是否是 "重" 星花, 关系到应用的空气阻力.
-			x: float, 星花的当前 x 坐标.
-			y: float, 星花的当前 y 坐标.
-			prevX: float, 上一帧星花的 x 坐标.
-			prevY: float, 上一帧星花的 y 坐标.
-			color: string, 星花的颜色.
-			speedX: float, 星花当前 x 方向的速度.
-			speedY: float, 星花当前 y 方向的速度.
-			life: float, 星花的剩余生命值 (ms).
-			fullLife: float, 星花的总生命值 (ms).
-			spinAngle: float, 星花的旋转角度.
-			spinSpeed: float, 星花的旋转速度.
-			spinRadius: float, 星花的旋转半径.
-			sparkFreq: float, 发射火花的频率 (ms).
-			sparkSpeed: float, 火花的速度.
-			sparkTimer: float, 火花的计时器 (ms).
-			sparkColor: string, 火花的颜色.
-			sparkLife: float, 火花的生命值 (ms).
-			sparkLifeVariation: float, 火花的生命值的可变范围.
-			strobe: bool, 是否应用闪烁效果.
-			onDeath: function, 星花死亡时调用的回调函数.
-			secondColor: string, 在生命周期中星花颜色渐变时的第二个颜色.
-			transitionTime:星花生命周期结束之前发生变化的时间
-		*/
+/*
+    visible: bool, 星花を描画するかどうかを示すフラグ。
+    heavy: bool, 星花が「重い」かどうかを示し、空気抵抗の適用に影響します。
+    x: float, 星花の現在の x 座標。
+    y: float, 星花の現在の y 座標。
+    prevX: float, 前のフレームにおける星花の x 座標。
+    prevY: float, 前のフレームにおける星花の y 座標。
+    color: string, 星花の色。
+    speedX: float, x 方向への星花の速度。
+    speedY: float, y 方向への星花の速度。
+    life: float, 星花の残り寿命（ms）。
+    fullLife: float, 星花の総寿命（ms）。
+    spinAngle: float, 星花の回転角度。
+    spinSpeed: float, 星花の回転速度。
+    spinRadius: float, 星花の回転半径。
+    sparkFreq: float, 火花の発射頻度（ms）。
+    sparkSpeed: float, 火花の速度。
+    sparkTimer: float, 火花のタイマー（ms）。
+    sparkColor: string, 火花の色。
+    sparkLife: float, 火花の寿命（ms）。
+    sparkLifeVariation: float, 火花の寿命の可変範囲。
+    strobe: bool, フラッシュ効果（点滅）を適用するかどうか。
+    onDeath: function, 星花が寿命を迎えたときに呼び出されるコールバック関数。
+    secondColor: string, 星花の色がライフサイクル中に変化する場合の2番目の色。
+    transitionTime: float, 星花のライフサイクル終了前に色が変化する時間。
+*/
+
 
 		this.active[color].push(instance);
 		return instance;
@@ -2585,9 +2600,9 @@ function addCustomWord() {
     }
 }
 
-// 添加事件阻止代码
+// イベントの阻止コードを追加
 document.addEventListener("DOMContentLoaded", function() {
-    // 为输入框添加事件阻止
+    // 入力ボックスにイベントの阻止を追加
     const userInput = document.getElementById('userInput');
     userInput.addEventListener('mousedown', (e) => {
         e.stopPropagation();
@@ -2596,7 +2611,7 @@ document.addEventListener("DOMContentLoaded", function() {
         e.stopPropagation();
     });
     
-    // 为提交按钮添加事件阻止
+    // 送信ボタンにイベントの阻止を追加
     const submitButton = document.querySelector('.add-button'); // 假设你的按钮有这个类名
     if (submitButton) {
         submitButton.addEventListener('mousedown', (e) => {
@@ -2612,7 +2627,7 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener("DOMContentLoaded", function () {
     const canvasContainer = document.querySelector(".canvas-container");
     
-    // 创建小地图容器
+    // ミニマップコンテナを作成
     const miniMap = document.createElement("div");
     miniMap.className = "mini-map";
     miniMap.style.cssText = `
@@ -2629,7 +2644,7 @@ document.addEventListener("DOMContentLoaded", function () {
         border: 2px solid rgba(255,192,203,0.5);
     `;
     
-	// 阻止小地图上的点击事件传播
+	// ミニマップ上のクリックイベントの伝播を阻止
     miniMap.addEventListener('mousedown', (e) => {
         e.stopPropagation();
     });
@@ -2638,7 +2653,7 @@ document.addEventListener("DOMContentLoaded", function () {
         e.stopPropagation();
     });
 
-    // 定义地点及其对应的图片
+    // 地点とそれに対応する画像を定義
     const locations = [
         { name: "沖縄", x: 0, y: 180, image: "./images/okinawa.jpg" },
 		{ name: "长崎", x: 10, y: 150, image: "./images/nagasaki.jpg" },
@@ -2654,10 +2669,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ];
     
-    // 添加日本地图作为背景
+    // 日本地図を背景として追加
     miniMap.innerHTML = `<img src="./images/japan-map.png" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; opacity: 0.6;">`;
     
-    // 添加地点标记
+    // 地点マーカーを追加
     locations.forEach(location => {
         const marker = document.createElement("div");
         marker.className = "location-marker";
@@ -2674,7 +2689,7 @@ document.addEventListener("DOMContentLoaded", function () {
             filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
         `;
         
-        // 添加悬停提示
+        // ホバー時のツールチップを追加
         marker.innerHTML = `<span class="tooltip" style="
             position: absolute;
             left: 25px;
@@ -2691,7 +2706,7 @@ document.addEventListener("DOMContentLoaded", function () {
             text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
         ">${location.name}</span>`;
         
-        // 添加交互效果
+        // インタラクティブ効果を追加
         marker.addEventListener("mouseover", () => {
             marker.querySelector(".tooltip").style.opacity = "1";
             marker.style.transform = "scale(1.2) rotate(360deg)";
@@ -2704,10 +2719,10 @@ document.addEventListener("DOMContentLoaded", function () {
             marker.style.background = "pink";
         });
         
-        // 点击切换背景
+        // クリックで背景を切り替える
         marker.addEventListener("click", () => {
             canvasContainer.style.backgroundImage = `url(${location.image})`;
-            // 添加点击动画效果
+            // クリック時のアニメーション効果を追加
             marker.style.transform = "scale(0.8)";
             setTimeout(() => {
                 marker.style.transform = "scale(1)";
@@ -2730,51 +2745,52 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// 在文件末尾添加分享功能相关代码
+// ファイルの末尾に共有機能関連のコードを追加する
 function shareCurrentState() {
-    // 获取当前的randomWords数组
+    // 現在のrandomWords配列を取得する
     const currentWords = randomWords;
     
-    // 创建一个包含当前状态的对象
+    // 現在の状態を含むオブジェクトを作成する
     const state = {
         words: currentWords
     };
     
-    // 将状态转换为Base64编码
+    // 状態をBase64エンコードに変換する
     const stateStr = btoa(JSON.stringify(state));
     
-    // 使用你的 GitHub Pages 地址
+    // あなたのGitHub Pagesのアドレスを使用する
     const baseUrl = 'https://marulion.github.io/firework/';
     const shareUrl = `${baseUrl}?state=${stateStr}`;
     
-    // 复制链接到剪贴板
+    // リンクをクリップボードにコピーする
     navigator.clipboard.writeText(shareUrl).then(() => {
         alert('リンクがクリップボードにコピーされました！');
     }).catch(err => {
         console.error('クリップボードへのコピーに失敗しました:', err);
-        // 如果复制失败，至少显示链接让用户手动复制
+        // コピーが失敗した場合、少なくともリンクを表示して手動でコピーできるようにする
         alert(`以下のリンクをコピーしてください：\n${shareUrl}`);
     });
 }
 
-// 在页面加载时检查URL中是否包含状态参数
+
+// ページ読み込み時にURLに状態パラメータが含まれているか確認する
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const state = urlParams.get('state');
     
     if (state) {
         try {
-            // 解码并解析状态
+            // 状態をデコードして解析する
             const stateObj = JSON.parse(atob(state));
             
-            // 恢复保存的文字
+            // 保存された文字を復元する
             if (stateObj.words && Array.isArray(stateObj.words)) {
-                // 清空现有的randomWords数组
+                // 既存のrandomWords配列をクリアする
                 randomWords.length = 0;
                 
-                // 添加分享链接中的文字
+                // 共有リンク内の文字を追加する
                 stateObj.words.forEach(word => {
-                    // 为每个词创建点阵图并添加到randomWords
+                    // 各単語のドットマトリクスを作成し、randomWordsに追加する
                     wordDotsMap[word] = MyMath.literalLattice(word, 3, "Gabriola,華文琥珀", "90px");
                     randomWords.push(word);
                 });
@@ -2785,8 +2801,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
 document.addEventListener("DOMContentLoaded", function() {
-    // 为分享按钮添加事件阻止
+    // 共有ボタンにイベントの阻止を追加
     const shareButton = document.querySelector('.share-button');
     if (shareButton) {
         shareButton.addEventListener('mousedown', (e) => {
