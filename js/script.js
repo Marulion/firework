@@ -139,7 +139,7 @@ const store = {
 				? "1.2" //ヘッダーのデフォルト値（整数である必要はありません）
 				: "2", //モバイルのデフォルト
 			wordShell: true, //文字花火 デフォルトでオン、オフにする場合はfalseに変更
-			autoLaunch: false, //自動打ち上げ
+			autoLaunch: true, //自動打ち上げ
 			finale: true, //同時により多くの花火を打ち上げ
 			skyLighting: SKY_LIGHT_NORMAL + "",
 			hideControls: IS_HEADER,
