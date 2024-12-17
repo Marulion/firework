@@ -8,12 +8,6 @@
 
 </div>
 
-## プレビュー
-
-- [https://nianbroken.github.io/Firework_Simulator/](https://nianbroken.github.io/Firework_Simulator/ "https://nianbroken.github.io/Firework_Simulator/")
-
-- [https://fireworks.nianbroken.top/](https://fireworks.nianbroken.top/ "https://fireworks.nianbroken.top/")
-
 ## 文字花火
 
 - `js` → `script.js` の81行目で、文字花火の文字を変更できます。
