@@ -1,24 +1,22 @@
-
-
-/* 自定义滚动条样式 */
+/* カスタムスクロールバーのスタイル */
 ::-webkit-scrollbar {
-	/* 选择整体滚动条 */
-	width: 0px; /* 设置滚动条的宽度 */
+	/* 全体のスクロールバーを選択 */
+	width: 0px; /* スクロールバーの幅を設定 */
 }
 
 ::-webkit-scrollbar-track {
-	/* 选择滚动条背景 */
-	background: #f1f1f1; /* 设置滚动条背景颜色 */
+	/* スクロールバーの背景を選択 */
+	background: #f1f1f1; /* スクロールバーの背景色を設定 */
 }
 
 ::-webkit-scrollbar-thumb {
-	/* 选择滚动条手柄 */
-	background: #888; /* 设置滚动条手柄的颜色 */
+	/* スクロールバーのハンドルを選択 */
+	background: #888; /* スクロールバーハンドルの色を設定 */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	/* 鼠标悬停时选择滚动条手柄 */
-	background: #555; /* 设置鼠标悬停时滚动条手柄的颜色 */
+	/* マウスホバー時のスクロールバーハンドルを選択 */
+	background: #555; /* マウスホバー時のスクロールバーハンドルの色を設定 */
 }
 
 * {
@@ -154,31 +152,31 @@ body {
 }
 .menu form {
     width: 100%;
-    max-width: 500px; /* 增加最大宽度 */
-    padding: 20px;    /* 增加内边距 */
-    margin: 0 auto;   /* 居中对齐 */
+    max-width: 500px; /* 最大幅を増やす */
+    padding: 20px;    /* 内側の余白を増やす */
+    margin: 0 auto;   /* 中央揃え */
     overflow: auto;
 }
 
 .menu .form-option {
     display: flex;
     align-items: center;
-    margin: 20px 0;   /* 增加选项间距 */
-    padding: 10px;    /* 添加内边距 */
-    background: rgba(255, 255, 255, 0.05); /* 添加微妙背景 */
-    border-radius: 8px;    /* 圆角边框 */
+    margin: 20px 0;   /* オプション間の間隔を広げる */
+    padding: 10px;    /* 内側の余白を追加 */
+    background: rgba(255, 255, 255, 0.05); /* 微妙な背景を追加 */
+    border-radius: 8px;    /* 角丸の枠線 */
     transition: all 0.3s ease;
 }
 
 .menu .form-option:hover {
-    background: rgba(255, 255, 255, 0.1); /* 悬停效果 */
+    background: rgba(255, 255, 255, 0.1); /* ホバーエフェクト */
 }
 
 .menu .form-option label {
     width: 45%;
     padding-right: 15px;
     font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.8); /* 提高文字对比度 */
+    color: rgba(255, 255, 255, 0.8); /* 文字のコントラストを高める */
 }
 
 .menu .form-option--select select {
@@ -204,7 +202,7 @@ body {
 .menu .form-option--checkbox input {
     width: 20px;
     height: 20px;
-    margin-left: auto; /* 将复选框推到右侧 */
+    margin-left: auto; /* チェックボックスを右側に配置 */
     cursor: pointer;
     opacity: 0.7;
 }
@@ -377,12 +375,12 @@ body {
 
 .custom-input {
     position: fixed; /* 固定位置 */
-    bottom: 20px; /* 离页面底部的距离 */
-    left: 50%; /* 水平居中 */
-    transform: translateX(-50%); /* 水平居中修正 */
-    display: flex; /* 使输入框和按钮并排 */
-    align-items: center; /* 垂直居中对齐 */
-    background-color: rgba(0, 0, 0, 0.6); /* 背景色，可选 */
+    bottom: 20px; /* ページの下部からの距離 */
+    left: 50%; /* 水平中央配置 */
+    transform: translateX(-50%); /* 水平中央補正 */
+    display: flex; /* 入力欄とボタンを横並びに */
+    align-items: center; /* 垂直中央揃え */
+    background-color: rgba(0, 0, 0, 0.6); /* 背景色（任意） */
     padding: 10px;
     border-radius: 10px;
 }
@@ -394,8 +392,8 @@ body {
     font-size: 16px;
     color: #000;
     background-color: rgba(255, 255, 255, 0.8);
-    margin-right: 10px; /* 输入框和按钮之间的间距 */
-    width: 200px; /* 输入框宽度 */
+    margin-right: 10px; /* 入力欄とボタンの間隔 */
+    width: 200px; /* 入力欄の幅 */
     transition: border-color 0.3s;
 }
 
@@ -423,32 +421,31 @@ body {
     padding: 10px 15px;
     font-size: 16px;
     color: #fff;
-    background-color: #e74c3c;  /* 使用不同的颜色区分 */
+    background-color: #e74c3c;  /* 異なる色で区別 */
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: 10px;  /* 与前一个按钮保持间距 */
+    margin-left: 10px;  /* 前のボタンとの間隔を確保 */
 }
 
 .custom-input .share-button:hover {
     background-color: #c0392b;
 }
 
-
 .canvas-container {
-    position: relative; /* 确保能使用 z-index */
-    background-size: cover; /* 使背景图像覆盖整个区域 */
-    z-index: 0; /* 背景层 */
+    position: relative; /* z-indexを使用可能に */
+    background-size: cover; /* 背景画像を全体にカバー */
+    z-index: 0; /* 背景レイヤー */
 }
 
 #trails-canvas, #main-canvas {
-    position: absolute; /* 使 canvas 元素定位 */
-    top: 0; /* 定位到上边 */
-    left: 0; /* 定位到左边 */
-    width: 100%; /* 设置为100%宽度 */
-    height: 100%; /* 设置为100%高度 */
-    z-index: 1; /* 确保在背景之上 */
+    position: absolute; /* canvas要素を配置 */
+    top: 0; /* 上端に配置 */
+    left: 0; /* 左端に配置 */
+    width: 100%; /* 幅を100%に設定 */
+    height: 100%; /* 高さを100%に設定 */
+    z-index: 1; /* 背景より上に表示 */
 }
 
 
